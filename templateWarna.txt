@@ -1,0 +1,4 @@
+black = #454545
+orange = #FF6000
+blue = #525FE1
+red = #F24C3D
