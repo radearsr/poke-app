@@ -1,10 +1,21 @@
+import { redirect } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../context/users.context";
 import FormInput from "../components/form-input/form-input.component";
 import {
   signInWithGoogleRedirect,
 } from "../utils/firebase/firebase.utils";
+import { useNavigate } from "react-router-dom";
 
 const Authentication = () => {
   const signInWithGoogleHandler = async () => await signInWithGoogleRedirect();
+
+  const navigate = useNavigate()
+  const { currentUser } = useContext(UserContext);
+
+  if (currentUser) {
+    return navigate("/", { replace: true });
+  }
 
   return (
     <div className="p-3 flex flex-col justify-between">
