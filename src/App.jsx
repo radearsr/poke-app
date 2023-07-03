@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar/navbar.component";
 import Home from "./pages/home.component";
+import Favorite from "./pages/favorite.component";
 import Authentication from "./pages/authentication.component";
 
 const App = () => {
@@ -8,7 +9,8 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Navbar />}>
         <Route index element={<Home />} />
-        <Route path="auth" element={<Authentication />} />
+        <Route path="sign-in" element={<Authentication />} />
+        <Route path="favorite" element={<Favorite />} />
       </Route>
     </Routes>
   );

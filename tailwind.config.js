@@ -7,9 +7,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        "black": "#454545",
-        "yellow": "#FFD93D",
-      }
+        "cs-black": "#454545",
+        "cs-yellow": "#FFD93D",
+        "cs-warm": "#FFEEBB",
+        "cs-dark-warm": "#FFE081",
+        "cs-orange": "#F86F03",
+        "cs-red": "#F24C3D",
+      },
     },
   },
   plugins: [],
