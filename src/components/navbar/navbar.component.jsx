@@ -1,15 +1,19 @@
 import { Link, Outlet } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../../context/users.context";
+import { FavoriteContext } from "../../context/favorite.context";
 import { signOutAuth } from "../../utils/firebase/firebase.utils";
 
 const Navbar = () => {
   const { currentUser } = useContext(UserContext);
+  const { favoriteLists } = useContext(FavoriteContext);
   return (
     <>
-      <nav className="flex flex-row justify-between py-2 px-3 bg-cs-black sticky top-0">
+      <nav className="flex flex-row justify-between py-2 px-3 bg-cs-black sticky top-0 z-[100]">
         <div>
-          <img src="https://pokeapi.co/static/pokeapi_256.3fa72200.png" className="w-32" alt="" />
+          <Link to="/">
+            <img src="/pokeapi-banner.png" className="w-32" alt="" />
+          </Link>
         </div>
         <ul className="flex flex-row items-center">
           <li>
@@ -17,6 +21,9 @@ const Navbar = () => {
           </li>
           <li className="mx-3">
             <Link to="/favorite" className="text-cs-yellow">FAVORITE</Link>
+            <span className="ms-1 p-1 text-white bg-cs-orange rounded">
+              {favoriteLists.length}
+            </span>
           </li>
           <li>
             {

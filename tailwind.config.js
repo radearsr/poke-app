@@ -14,6 +14,9 @@ export default {
         "cs-orange": "#F86F03",
         "cs-red": "#F24C3D",
       },
+      dropShadow: {
+        "text": "0 2px 2px #F86F03",
+      }
     },
   },
   plugins: [],
