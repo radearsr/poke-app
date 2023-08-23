@@ -1,22 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { UserProvider } from "./context/users.context";
-import { PokeProvider } from "./context/poke.context";
-import { FavoriteProvider } from "./context/favorite.context";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "./features/store.js";
 import App from "./App.jsx";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <UserProvider>
-      <PokeProvider>
-        <FavoriteProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </FavoriteProvider>
-      </PokeProvider>
-    </UserProvider>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
   </React.StrictMode>,
 );

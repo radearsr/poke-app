@@ -1,9 +1,11 @@
-import { useContext } from "react";
-import { FavoriteContext } from "../../context/favorite.context";
+import { setFavoriteLists } from "../../features/favorites/favorite.slice";
+import { useDispatch } from "react-redux";
 import ButtonFavorite from "../button-favorite/button-favorite.component";
 
+
 const PokeCard = ({ isLogin, pokemon, favoritePokemon }) => {
-  const { addOrDelPokeToFavoriteList } = useContext(FavoriteContext);
+  const dispatch = useDispatch();
+  const addOrDelPokeToFavoriteList = () => dispatch(setFavoriteLists(pokemon));
   return (
     <div className="basis-1/4">
       <div className="flex flex-col justify-between items-center p-2 mx-2 mt-5 text-center h-60 rounded border-4 border-cs-orange bg-cs-dark-warm relative">

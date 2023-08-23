@@ -1,11 +1,12 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { UserContext } from "../context/users.context";
 import FormInput from "../components/form-input/form-input.component";
 import {
   signInWithGoogleRedirect,
   signInUserWithEmailAndPassword,
 } from "../utils/firebase/firebase.utils";
+import { selectCurrentUser } from "../features/users/user.selector";
 import { useNavigate } from "react-router-dom";
 
 const defaultFormFields = {
@@ -40,7 +41,7 @@ const SignIn = () => {
   }
  
   const navigate = useNavigate()
-  const { currentUser } = useContext(UserContext);
+  const currentUser = useSelector(selectCurrentUser);
 
   if (currentUser) {
     return navigate("/", { replace: true });

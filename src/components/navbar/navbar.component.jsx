@@ -1,12 +1,13 @@
 import { Link, Outlet } from "react-router-dom";
-import { useContext } from "react";
-import { UserContext } from "../../context/users.context";
-import { FavoriteContext } from "../../context/favorite.context";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../features/users/user.selector";
+import { selectFavorite } from "../../features/favorites/favorite.selector";
 import { signOutAuth } from "../../utils/firebase/firebase.utils";
 
 const Navbar = () => {
-  const { currentUser } = useContext(UserContext);
-  const { favoriteLists } = useContext(FavoriteContext);
+  const currentUser = useSelector(selectCurrentUser);
+  const favoriteLists = useSelector(selectFavorite);
+  
   return (
     <>
       <nav className="flex flex-row justify-between py-2 px-3 bg-cs-black sticky top-0 z-[100]">
