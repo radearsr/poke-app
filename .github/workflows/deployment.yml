@@ -1,0 +1,22 @@
+name: Jenkins Trigger
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  trigger-jenkins:
+    runs-on: ubuntu-latest
+
+    env:
+      JENKINS_URL: ${{ secrets.JENKINS_URL }}
+      JENKINS_USERNAME: ${{ secrets.JENKINS_USERNAME }}
+      JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
+      JENKINS_TRIGGER_TOKEN: ${{ secrets.JENKINS_TRIGGER_TOKEN }}
+
+    steps:
+      - name: Trigger Jenkins Job
+        run: |
+          curl -X POST $JENKINS_URL/me/my-views/view/all/job/Belajar%20Jenkins%2002/build?token=$JENKINS_TRIGGER_TOKEN \
+          --user $JENKINS_USERNAME:$JENKINS_API_TOKEN
