@@ -27,22 +27,17 @@ pipeline{
                             sshPublisherDesc(
                                 configName: "Server Rabbit 01"
                                 transfers: [
-                                    sshTransfer(
-                                        sourceFiles: "*.tar"
-                                        execCommand: """
-                                            tar -xf /home/rabbit/dist.tar
-                                            rm /home/rabbit/dist.tar
-                                            mv /home/rabbit/dist /var/www/html/
-                                            rm -r /var/www/html/assets
-                                            rm  /var/www/html/heart-full.png
-                                            rm  /var/www/html/heart.png
-                                            rm  /var/www/html/pokeapi-banner.png
-                                            rm  /var/www/html/vite.svg
-                                            rm  /var/www/html/index.html
-                                            mv /var/www/html/dist/** /var/www/html/
-                                            rm -r /var/www/html/dist                                            
-                                        """
-                                    )
+                                    [
+                                        execCommand: 'tar -xf /home/rabbit/dist.tar',
+                                        execTimeout: 120000,
+                                        flatten: false,
+                                        makeEmptyDirs: false,
+                                        noDefaultExcludes: false,
+                                        patternSeparator: '[, ]+',
+                                        remoteDirectory: '',
+                                        removePrefix: '',
+                                        sourceFiles: '*.tar'                                       
+                                    ]
                                 ]
                             )
                         ]
