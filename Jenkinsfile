@@ -54,9 +54,8 @@ pipeline{
     post{
         always{
             script {
-                def botToken = env.TELEGRAM_BOT_TOKEN
-                def chatId = env.TELEGRAM_CHAT_ID
-                telegramSend(token: botToken, chatId: chatId, message: "Pipeline executed successfully!")
+                def message = "Pipeline executed successfully!"
+                sendMessageToTelegram(message)
             }
         }
         success{
@@ -66,4 +65,15 @@ pipeline{
             echo "========pipeline execution failed========"
         }
     }
+}
+
+def sendMessageToTelegram(message) {
+    def botToken = env.TELEGRAM_BOT_TOKEN
+    def chatId = env.TELEGRAM_CHAT_ID 
+    sh """
+        curl -s -X POST \
+             -H 'Content-Type: application/json' \
+             -d '{"chat_id":"${chatId}","text":"${message}"}' \
+             https://api.telegram.org/bot${botToken}/sendMessage
+    """
 }
