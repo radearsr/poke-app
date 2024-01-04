@@ -53,7 +53,7 @@ pipeline{
     }
     post{
         always{
-            echo "========always========"
+            telegramSend(message: "Pipeline execution DONE!")
         }
         success{
             echo "========pipeline executed successfully ========"
