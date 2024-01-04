@@ -55,7 +55,7 @@ pipeline{
         always{
             script {
                 def blueOceanURL = "${env.JENKINS_URL}blue/organizations/jenkins/${env.JOB_NAME}/detail/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline"
-                def message = "*>>>>> PIPELINE SUCCESS 🟡 <<<<<*\\\n" +
+                def message = "\\> PIPELINE SUCCESS \\<\n" +
                               "[View Pipeline]($blueOceanURL)"
                 sendMessageToTelegram(message)
             }
