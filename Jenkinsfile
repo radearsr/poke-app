@@ -53,7 +53,11 @@ pipeline{
     }
     post{
         always{
-            telegramSend(message: "Pipeline execution DONE!")
+            script {
+                def botToken = env.TELEGRAM_BOT_TOKEN
+                def chatId = env.TELEGRAM_CHAT_ID
+                telegramSend(token: botToken, chatId: chatId, message: "Pipeline executed successfully!")
+            }
         }
         success{
             echo "========pipeline executed successfully ========"
