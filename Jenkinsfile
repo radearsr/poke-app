@@ -56,6 +56,8 @@ pipeline{
             script {
                 def blueOceanURL = "${env.JENKINS_URL}blue/organizations/jenkins/${env.JOB_NAME}/detail/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline"
                 def message = "Pipeline executed successfully!\n${blueOceanURL}"
+                def message = ">>>>> Pipeline Success <<<<<\n" +
+                              "[View Pipeline]($blueOceanURL)"
                 sendMessageToTelegram(message)
             }
         }
@@ -74,7 +76,7 @@ def sendMessageToTelegram(message) {
     sh """
         curl -s -X POST \
              -H 'Content-Type: application/json' \
-             -d '{"chat_id":"${chatId}","text":"${message}"}' \
+             -d '{"chat_id":"${chatId}","text":"${message}", "parse_mode":"MarkdownV2"}' \
              https://api.telegram.org/bot${botToken}/sendMessage
     """
 }
