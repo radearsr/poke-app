@@ -23,7 +23,7 @@ pipeline{
                 script {
                     sshPublisher(
                         failOnError: true,
-                        publisher: [
+                        publishers: [
                             sshPublisherDesc(
                                 configName: "Server Rabbit 01",
                                 transfers: [
