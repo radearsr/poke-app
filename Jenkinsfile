@@ -9,6 +9,7 @@ pipeline{
                 echo "========BUILDING========"
                 sh "npm -v"
                 sh "node -v"
+                sh "npm install"
                 sh "npm run build"
                 echo "BUILD SUCCESS LISTING FILES"
                 sh "ls -al"
