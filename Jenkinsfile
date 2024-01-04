@@ -25,7 +25,7 @@ pipeline{
                         failOnError: true,
                         publisher: [
                             sshPublisherDesc(
-                                configName: "Server Rabbit 01"
+                                configName: "Server Rabbit 01",
                                 transfers: [
                                     [
                                         execCommand: 'tar -xf /home/rabbit/dist.tar',
