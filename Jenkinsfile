@@ -54,8 +54,8 @@ pipeline{
     post{
         always{
             script {
-                def blueOceanURL = "#${env.JENKINS_URL}blue/organizations/jenkins/#${env.JOB_NAME}/detail/#${env.JOB_NAME}/#${env.BUILD_NUMBER}/pipeline"
-                def message = "Pipeline executed successfully!\n#${blueOceanURL}"
+                def blueOceanURL = "${env.JENKINS_URL}blue/organizations/jenkins/${env.JOB_NAME}/detail/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline"
+                def message = "Pipeline executed successfully!\n${blueOceanURL}"
                 sendMessageToTelegram(message)
             }
         }
