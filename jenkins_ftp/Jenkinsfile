@@ -77,8 +77,8 @@ def sendMessageToTelegram(messageCode) {
     def branchName = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
     def commitHash = env.GIT_COMMIT
     def lastCommitAuthor = sh(script: 'git log -1 --pretty=format:%an', returnStdout: true).trim()
-    def branchAll = sh(script: 'git branch', returnStdout: true).trim()
-    
+    def branchAll = sh(script: 'git branch', returnStdout: true)
+
     echo "Branch All: ${branchAll}"
     echo "GitHub URL: ${githubUrl}"
     echo "Branch: ${branchName}"
