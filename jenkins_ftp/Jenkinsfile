@@ -77,6 +77,6 @@ def sendMessageToTelegram(messageCode) {
     def jenkinsUrl = env.JENKINS_URL
     def fullBlueOceanUrl = "${jenkinsUrl}blue/organizations/jenkins/${jobName}/detail/${jobName}/${buildNumber}/pipeline"
     def group = "DEPLOYMENT"
-    def senderBaseUrl = "http://localhost:3000/telemon"
+    def senderBaseUrl = "http://192.168.56.1:3000/telemon"
     sh "curl -X GET \"${senderBaseUrl}?grup=${group}&msgCode=${messageCode}&jobName=${jobName}&buildNum=${buildNumber}&logsUrl=${fullBlueOceanUrl}\""
 }
