@@ -70,29 +70,21 @@ def deployToFTP(configName, remoteDirectory) {
     }
 }
 
-def getGitBranchName() {
-    return scm.branches[0].name
-}
 
 def sendMessageToTelegram(messageCode) {
     // messageCode: 0 = Error, 1 = Start, 2 = Success
     // Mendapatkan informasi tentang branch, commit hash, dan last commit author
     def githubUrl = sh(script: 'git config --get remote.origin.url', returnStdout: true).trim()
-    def branchName = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
     def commitHash = env.GIT_COMMIT
     def lastCommitAuthor = sh(script: 'git log -1 --pretty=format:%an', returnStdout: true).trim()
-    def branchAll = getGitBranchName()
+    def branchAll = scm.branches[0].name
+    def githubWithCommit = "${githubUrl}/commit/${commitHash}"
 
-    echo "Branch All: ${branchAll}"
-    echo "GitHub URL: ${githubUrl}"
-    echo "Branch: ${branchName}"
-    echo "Commit Hash: ${commitHash}"
-    echo "Last Commit Author: ${lastCommitAuthor}"
     def jobName = env.JOB_NAME
     def buildNumber = env.BUILD_NUMBER
     def jenkinsUrl = "https://jenkins.otoreply.com/"
     def fullBlueOceanUrl = "${jenkinsUrl}blue/organizations/jenkins/${jobName}/detail/${jobName}/${buildNumber}/pipeline"
     def group = "DEPLOYMENT"
     def senderBaseUrl = "http://192.168.56.1:3000/telemon"
-    sh "curl -X GET \"${senderBaseUrl}?grup=${group}&msgCode=${messageCode}&jobName=${jobName}&buildNum=${buildNumber}&logsUrl=${fullBlueOceanUrl}\""
+    sh "curl -X GET \"${senderBaseUrl}?grup=${group}&msgCode=${messageCode}&jobName=${jobName}&buildNum=${buildNumber}&logsUrl=${fullBlueOceanUrl}&commitAuthor=${commitAuthor}&commitUrl=${githubWithCommit}&branchName=${branchName}\""
 }
