@@ -71,12 +71,12 @@ def deployToFTP(configName, remoteDirectory) {
 }
 
 def sendMessageToTelegram(messageCode) {
-    // Message Code Guide : 0 = Error, 1 = Start, 2 = Success
+    // Message Code Guide: 0 = Error, 1 = Start, 2 = Success
     def jobName = env.JOB_NAME
     def buildNumber = env.BUILD_NUMBER
     def jenkinsUrl = env.JENKINS_URL
     def fullBlueOceanUrl = "${jenkinsUrl}blue/organizations/jenkins/${jobName}/detail/${jobName}/${buildNumber}/pipeline"
     def group = "DEPLOYMENT"
     def senderBaseUrl = "http://localhost:3000/telemon"
-    sh " curl ${senderBaseUrl}?grup=${group}&msgCode=${messageCode}&jobName=${jobName}&buildNum=${buildNumber}&logsUrl=${fullBlueOceanUrl} "
+    sh "curl -X GET \"${senderBaseUrl}?grup=${group}&msgCode=${messageCode}&jobName=${jobName}&buildNum=${buildNumber}&logsUrl=${fullBlueOceanUrl}\""
 }
