@@ -77,7 +77,7 @@ def sendMessageToTelegram(messageCode) {
     def githubUrl = sh(script: 'git config --get remote.origin.url', returnStdout: true).trim()
     def commitHash = env.GIT_COMMIT
     def lastCommitAuthor = sh(script: 'git log -1 --pretty=format:%an', returnStdout: true).trim()
-    def branchAll = scm.branches[0].name
+    def branchName = scm.branches[0].name
     def githubWithCommit = "${githubUrl}/commit/${commitHash}"
 
     def jobName = env.JOB_NAME
