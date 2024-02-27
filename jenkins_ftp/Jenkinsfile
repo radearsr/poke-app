@@ -74,7 +74,7 @@ def sendMessageToTelegram(messageCode) {
     // messageCode: 0 = Error, 1 = Start, 2 = Success
     // Mendapatkan informasi tentang branch, commit hash, dan last commit author
     def githubUrl = sh(script: 'git config --get remote.origin.url', returnStdout: true).trim()
-    def branchName = env.BRANCH_NAME
+    def branchName = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
     def commitHash = env.GIT_COMMIT
     def lastCommitAuthor = sh(script: 'git log -1 --pretty=format:%an', returnStdout: true).trim()
 
