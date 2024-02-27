@@ -86,5 +86,5 @@ def sendMessageToTelegram(messageCode) {
     def fullBlueOceanUrl = "${jenkinsUrl}blue/organizations/jenkins/${jobName}/detail/${jobName}/${buildNumber}/pipeline"
     def group = "DEPLOYMENT"
     def senderBaseUrl = "http://192.168.56.1:3000/telemon"
-    sh "curl -X GET \"${senderBaseUrl}?grup=${group}&msgCode=${messageCode}&jobName=${jobName}&buildNum=${buildNumber}&logsUrl=${fullBlueOceanUrl}&commitAuthor=${commitAuthor}&commitUrl=${githubWithCommit}&branchName=${branchName}\""
+    sh "curl -X GET \"${senderBaseUrl}?grup=${group}&msgCode=${messageCode}&jobName=${jobName}&buildNum=${buildNumber}&logsUrl=${fullBlueOceanUrl}&commitAuthor=${lastCommitAuthor}&commitUrl=${githubWithCommit}&branchName=${branchName}\""
 }
