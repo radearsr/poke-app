@@ -74,7 +74,7 @@ def sendMessageToTelegram(messageCode) {
     // Message Code Guide: 0 = Error, 1 = Start, 2 = Success
     def jobName = env.JOB_NAME
     def buildNumber = env.BUILD_NUMBER
-    def jenkinsUrl = env.JENKINS_URL
+    def jenkinsUrl = "https://jenkins.otoreply.com/"
     def fullBlueOceanUrl = "${jenkinsUrl}blue/organizations/jenkins/${jobName}/detail/${jobName}/${buildNumber}/pipeline"
     def group = "DEPLOYMENT"
     def senderBaseUrl = "http://192.168.56.1:3000/telemon"
