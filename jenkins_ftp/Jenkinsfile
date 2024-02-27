@@ -1,0 +1,82 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs "NodeJS 18.18.0"
+    }
+
+    stages {
+        stage("Notify Start") {
+            steps {
+                script {
+                    sendMessageToTelegram("1")
+                }
+            }
+        }
+
+        stage("Build") {
+            steps {
+                sh "npm -v"
+                sh "node -v"
+                sh "npm install"
+                sh "npm run build"
+                echo "BUILD SUCCESS LISTING FILES"
+                sh "ls -al"
+            }
+        }
+
+        stage("Deploy") {
+            steps {
+                deployToFTP("Rabbit Server FTP", "pokeapp")
+            }
+        }
+    }
+
+    post {
+        failure {
+            script {
+                sendMessageToTelegram("0")
+            }
+        }
+        success {
+            script {
+                sendMessageToTelegram("2")
+            }
+        }
+    }
+}
+
+def deployToFTP(configName, remoteDirectory) {
+    script {
+        // Menggunakan step 'Publish Over FTP' untuk mengunggah file
+        ftpPublisher(
+            failOnError: true, // Gagal jika ada kesalahan
+            publishers: [
+                // Konfigurasi FTP Site
+                [
+                    configName: configName, // Nama konfigurasi FTP yang sudah ada di Jenkins
+                    transfers: [
+                        // Konfigurasi pengiriman file
+                        [
+                            sourceFiles: "dist/**/*", // Pola file yang akan diunggah
+                            remoteDirectory: remoteDirectory, // Direktori remote di server FTP
+                            removePrefix: "dist", // Hapus prefiks direktori lokal
+                            flatten: false, // Apakah mempertahankan struktur direktori
+                        ]
+                    ]
+                ]
+            ]
+        )
+    }
+}
+
+def sendMessageToTelegram(messageCode) {
+    // Message Code Guide : 0 = Error, 1 = Start, 2 = Success
+    def jobName = env.JOB_NAME
+    def buildNumber = env.BUILD_NUMBER
+    def jenkinsUrl = env.JENKINS_URL
+    def fullBlueOceanUrl = "${jenkinsUrl}blue/organizations/jenkins/${jobName}/detail/${jobName}/${buildNumber}/pipeline"
+    def group = "DEPLOYMENT"
+    def senderBaseUrl = "http://localhost:3000/telemon"
+    sh " curl ${senderBaseUrl}?grup=${group}&msgCode=${messageCode}&jobName=${jobName}&buildNum=${buildNumber}&logsUrl=${fullBlueOceanUrl} "
+}
