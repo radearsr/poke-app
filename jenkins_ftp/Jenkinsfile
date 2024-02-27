@@ -71,7 +71,17 @@ def deployToFTP(configName, remoteDirectory) {
 }
 
 def sendMessageToTelegram(messageCode) {
-    // Message Code Guide: 0 = Error, 1 = Start, 2 = Success
+    // messageCode: 0 = Error, 1 = Start, 2 = Success
+    // Mendapatkan informasi tentang branch, commit hash, dan last commit author
+    def githubUrl = sh(script: 'git config --get remote.origin.url', returnStdout: true).trim()
+    def branchName = env.BRANCH_NAME
+    def commitHash = env.GIT_COMMIT
+    def lastCommitAuthor = sh(script: 'git log -1 --pretty=format:%an', returnStdout: true).trim()
+
+    echo "GitHub URL: ${githubUrl}"
+    echo "Branch: ${branchName}"
+    echo "Commit Hash: ${commitHash}"
+    echo "Last Commit Author: ${lastCommitAuthor}"
     def jobName = env.JOB_NAME
     def buildNumber = env.BUILD_NUMBER
     def jenkinsUrl = "https://jenkins.otoreply.com/"
